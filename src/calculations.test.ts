@@ -1,5 +1,5 @@
 import {describe,expect,it} from 'vitest'
-import {contribution,margin,initialCommitment,budgetSummary} from './calculations'
+import {contribution,margin,initialCommitment,budgetSummary,scenarioContribution} from './calculations'
 import type {Product} from './types'
-const p:Product={id:'1',name:'테스트',category:'상의',supplier:'공급처',cost:10000,price:30000,shipping:3000,feeRate:10,otherCost:2000,moq:2,imageRights:false,stockCheckedAt:'2026-10-19',sampleStatus:'미검수',assumption:true}
-describe('수익 계산',()=>{it('건당 기여이익을 계산한다',()=>expect(contribution(p)).toBe(12000));it('이익률을 계산한다',()=>expect(margin(p)).toBe(40));it('초기 투입액은 MOQ 매입+배송+기타비용이다',()=>expect(initialCommitment(p)).toBe(25000));it('30만원 예산 잔액을 계산한다',()=>expect(budgetSummary([p]).remaining).toBe(275000))})
+const p:Product={id:'1',name:'테스트',category:'상의',supplier:'공급처',sourceUrl:'https://example.com',evidence:'테스트',cost:10000,price:30000,shipping:3000,feeRate:10,otherCost:2000,moq:2,imageRights:false,stockCheckedAt:'2026-10-19',sampleStatus:'미검수',assumption:true}
+describe('수익 계산',()=>{it('건당 기여이익을 계산한다',()=>expect(contribution(p)).toBe(12000));it('이익률을 계산한다',()=>expect(margin(p)).toBe(40));it('초기 투입액은 MOQ 매입+배송+기타비용이다',()=>expect(initialCommitment(p)).toBe(25000));it('30만원 예산 잔액을 계산한다',()=>expect(budgetSummary([p]).remaining).toBe(275000));it('할인·반품충당·광고비 시나리오를 계산한다',()=>expect(scenarioContribution(p,10,5,1000)).toBe(6950))})
